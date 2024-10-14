@@ -145,6 +145,13 @@ app_license = "mit"
 # 	}
 # }
 
+doc_events = {
+    "Sales Invoice": {
+        "on_submit": "email_automated.send_invoice_email.send_invoice_submission_email"
+    }
+}
+
+
 # Scheduled Tasks
 # ---------------
 
