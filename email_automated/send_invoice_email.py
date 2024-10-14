@@ -12,6 +12,9 @@ def send_invoice_submission_email(doc, method):
     customer_email = doc.get('custom_customer_email')
     if customer_email:
         send_email(doc, customer_email)
+    else:
+        frappe.msgprint("No email Found continue")
+        return
 
 def send_email(invoice, recipient):
     """
