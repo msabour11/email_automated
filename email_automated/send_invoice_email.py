@@ -10,34 +10,46 @@ def send_invoice_submission_email(doc, method):
     """
     # Send email to customer if custom_customer_email exists
     customer_email = doc.get('custom_customer_email')
-    if customer_email:
-        send_email(doc, customer_email)
-    else:
-        frappe.msgprint("No email Found continue")
-        return
+    customer_contact= doc.get("custom_contact")
+    custom_email_template= doc.get("custom_email_template")
+    doc_args = doc.as_dict()
 
-def send_email(invoice, recipient):
+
+
+    
+
+
+    if customer_email and custom_email_template:
+        send_email(doc, customer_email,custom_email_template,doc_args=doc_args)
+    else:
+        frappe.msgprint("No email or tempalte  Found ")
+        return
+    
+
+def send_email(invoice, recipient,template,doc_args):
     """
     Helper function to send an email notification to the customer.
+
     """
-    # Email subject and message content
-    subject = f"Sales Invoice {invoice.name} Submitted"
-    message = f"""
-    Dear Customer,<br><br>
-    The Sales Invoice <b>{invoice.name}</b> has been submitted.<br>
-    Total Amount: {invoice.grand_total}<br>
-    Due Date: {invoice.due_date}<br>
-    <a href="{frappe.utils.get_url_to_form('Sales Invoice', invoice.name)}">View Invoice</a><br><br>
-    Thank you!
-    """
+
+
+    if template:
+        email_template = frappe.get_doc("Email Template", template)
+
     
-    # Send the email using Frappe's make function
+
+    message = frappe.render_template(email_template.response,doc_args)
+    subject = frappe.render_template(email_template.subject,doc_args)
+    sender = frappe.session.user  and frappe.session.user or None
+
+    # Send the email using make function
     make(
         recipients=[recipient],
         subject=subject,
         content=message,
         doctype="Sales Invoice",
         name=invoice.name,
-        send_email=True
+        send_email=True,
+        sender=sender
     )
     frappe.msgprint(f"Email sent to customer at {recipient}")
