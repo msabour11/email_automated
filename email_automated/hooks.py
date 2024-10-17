@@ -175,6 +175,18 @@ doc_events = {
 # 	],
 # }
 
+
+scheduler_events = {
+    "all": [
+        "frappe.email.queue.flush"
+    ],
+    "cron": {
+        "*/1 * * * *": [
+            "frappe.email.queue.flush"
+        ]
+    }
+}
+
 # Testing
 # -------
 

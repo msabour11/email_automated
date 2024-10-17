@@ -98,7 +98,6 @@ frappe.ui.form.on("Sales Invoice", {
 frappe.ui.form.on("Email Contact", {
   contact: function (frm, cdt, cdn) {
     var row = locals[cdt][cdn];
-    frappe.msgprint("hdlllllllllll");
 
     if (row.contact) {
       frappe.call({

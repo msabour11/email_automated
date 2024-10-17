@@ -23,10 +23,11 @@ def send_invoice_submission_email(doc, method):
 
 
 
-    if recipients:
+    if recipients and custom_email_template:
         send_email(doc, recipients, custom_email_template, doc_args=doc_args)
     else:
-        frappe.msgprint("No valid email addresses found")
+        frappe.msgprint("No valid email addresses found or template found")
+        return
 
 
 
