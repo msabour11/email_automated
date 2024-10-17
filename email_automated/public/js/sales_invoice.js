@@ -1,15 +1,15 @@
 frappe.ui.form.on("Sales Invoice", {
   setup(frm) {
     // filters commissar based on company name
-    frm.set_query("custom_contact", function (doc) {
-      return {
-        query: "email_automated.utils.get_contact.get_contacts_by_link",
-        filters: {
-          link_doctype: "Customer",
-          link_name: doc.customer,
-        },
-      };
-    });
+    // frm.set_query("custom_contact", function (doc) {
+    //   return {
+    //     query: "email_automated.utils.get_contact.get_contacts_by_link",
+    //     filters: {
+    //       link_doctype: "Customer",
+    //       link_name: doc.customer,
+    //     },
+    //   };
+    // });
 
     ////////////////////
     /// filter contacts in emails table based on customer
