@@ -9,24 +9,43 @@ def send_invoice_submission_email(doc, method):
     Sends an email to the customer upon submission of the Sales Invoice.
     """
     # Send email to customer if custom_customer_email exists
-    customer_email = doc.get('custom_customer_email')
+    # customer_email = doc.get('custom_customer_email')
     customer_contact= doc.get("custom_contact")
     custom_email_template= doc.get("custom_email_template")
     doc_args = doc.as_dict()
+    emails_table= doc.get("custom_emails")
 
-
-
-    
-
-
-    if customer_email and custom_email_template:
-        send_email(doc, customer_email,custom_email_template,doc_args=doc_args)
+    if emails_table:
+        recipients=[row.email for row in emails_table if row.email]
     else:
-        frappe.msgprint("No email or tempalte  Found ")
+        frappe.msgprint("No emails found in the table")
         return
+
+
+
+    if recipients:
+        send_email(doc, recipients, custom_email_template, doc_args=doc_args)
+    else:
+        frappe.msgprint("No valid email addresses found")
+
+
+
     
 
-def send_email(invoice, recipient,template,doc_args):
+
+
+
+    
+
+
+    # if customer_email and custom_email_template:
+    #     send_email(doc, customer_email,custom_email_template,doc_args=doc_args)
+    # else:
+    #     frappe.msgprint("No email or tempalte  Found ")
+    #     return
+    
+
+def send_email(invoice, recipients,template,doc_args):
     """
     Helper function to send an email notification to the customer.
 
@@ -44,7 +63,7 @@ def send_email(invoice, recipient,template,doc_args):
 
     # Send the email using make function
     make(
-        recipients=[recipient],
+        recipients=recipients,
         subject=subject,
         content=message,
         doctype="Sales Invoice",
@@ -52,4 +71,4 @@ def send_email(invoice, recipient,template,doc_args):
         send_email=True,
         sender=sender
     )
-    frappe.msgprint(f"Email sent to customer at {recipient}")
+    frappe.msgprint(f"Email sent to customer at {recipients}")
