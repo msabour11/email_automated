@@ -1,24 +1,28 @@
 frappe.ui.form.on("Subscription", {
-  setup(frm) {
+  party(frm) {
     // if (frm.doc.party_type == "Customer" && frm.doc.party) {
 
-    // }
+    // }          frm.clear_table("custom_email");
 
-   
-    frm.fields_dict["custom_email"].grid.get_field("contact").get_query =
-      function (doc) {
-        return {
-          query: "email_automated.utils.get_contact.get_contacts_by_link",
-          filters: {
-            link_doctype: "Customer",
-            link_name: doc.party,
-          },
+    frm.clear_table("custom_email");
+    console.log("the table is cleared");
+
+    if (frm.doc.party) {
+      frm.fields_dict["custom_email"].grid.get_field("contact").get_query =
+        function (doc) {
+          return {
+            query: "email_automated.utils.get_contact.get_contacts_by_link",
+            filters: {
+              link_doctype: "Customer",
+              link_name: doc.party,
+            },
+          };
         };
-      };
+    }
+
+    frm.refresh_field("custom_email");
   },
 });
-
-
 
 frappe.ui.form.on("Subscription Email", {
   contact: function (frm, cdt, cdn) {

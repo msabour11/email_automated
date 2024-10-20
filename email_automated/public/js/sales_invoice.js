@@ -1,77 +1,23 @@
 frappe.ui.form.on("Sales Invoice", {
-  setup(frm) {
-    // filters commissar based on company name
-    // frm.set_query("custom_contact", function (doc) {
-    //   return {
-    //     query: "email_automated.utils.get_contact.get_contacts_by_link",
-    //     filters: {
-    //       link_doctype: "Customer",
-    //       link_name: doc.customer,
-    //     },
-    //   };
-    // });
+  customer(frm) {
+    frm.clear_table("custom_emails");
 
-    ////////////////////
     /// filter contacts in emails table based on customer
 
-    frm.fields_dict["custom_emails"].grid.get_field("contact").get_query =
-      function (doc) {
-        return {
-          query: "email_automated.utils.get_contact.get_contacts_by_link",
-          filters: {
-            link_doctype: "Customer",
-            link_name: doc.customer,
-          },
+    if (frm.doc.customer) {
+      frm.fields_dict["custom_emails"].grid.get_field("contact").get_query =
+        function (doc) {
+          return {
+            query: "email_automated.utils.get_contact.get_contacts_by_link",
+            filters: {
+              link_doctype: "Customer",
+              link_name: doc.customer,
+            },
+          };
         };
-      };
+    }
+    frm.refresh_field("custom_email");
   },
-
-  //     customer: function(frm) {
-  //     if (frm.doc.customer) {
-
-  //     frappe.call({
-  //     method: "frappe.client.get_list",
-  //     args: {
-  //       doctype: "Contact",
-  //       filters: [
-  //         ["Dynamic Link", "link_doctype", "=", "Customer"],
-  //         ["Dynamic Link", "link_name", "=", frm.doc.customer],
-  //       ],
-  //       fields: ["name", "email_id", "phone"],
-  //     },
-  //     callback: function (r) {
-  //       if (r.message)
-  //       {
-
-  //           console.log("hi",r.message)
-  //       }
-  //     },
-  //   });
-
-  //         }
-  //     },
-
-  // custom_contact(frm) {
-  //   if (frm.doc.customer && frm.doc.custom_contact) {
-  //     frappe.call({
-  //       method: "frappe.client.get",
-  //       args: {
-  //         doctype: "Contact",
-  //         name: frm.doc.custom_contact,
-  //       },
-  //       callback: function (r) {
-  //         let email = r.message.email_id;
-  //         if (email) {
-  //           console.log("the contact is ", email);
-
-  //           frm.set_value("custom_customer_email", email);
-  //         }
-  //       },
-  //     });
-  //   } else frm.set_value("custom_customer_email", "");
-  // },
-
-
 });
 
 frappe.ui.form.on("Email Contact", {
