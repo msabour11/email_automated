@@ -22,6 +22,10 @@ frappe.ui.form.on("Subscription", {
 
     frm.refresh_field("custom_email");
   },
+
+  after_save(frm) {
+    frm.set_df_property("plans", "read_only", 1);
+  },
 });
 
 frappe.ui.form.on("Subscription Email", {
