@@ -44,7 +44,10 @@ app_license = "mit"
 
 # include js in doctype views
 # doctype_js = {"doctype" : "public/js/doctype.js"}
-doctype_js = {"Sales Invoice" : "public/js/sales_invoice.js"}
+doctype_js = {"Sales Invoice" : "public/js/sales_invoice.js",
+
+                "Subscription" : "public/js/subscription.js"
+}
 
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
@@ -134,6 +137,11 @@ doctype_js = {"Sales Invoice" : "public/js/sales_invoice.js"}
 # override_doctype_class = {
 # 	"ToDo": "custom_app.overrides.CustomToDo"
 # }
+
+override_doctype_class = {
+	"Subscription": "email_automated.overrides.override_subscription.CustomSubscription"
+}
+
 
 # Document Events
 # ---------------

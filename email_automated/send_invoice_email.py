@@ -3,6 +3,8 @@
 
 import frappe
 from frappe.core.doctype.communication.email import make
+from frappe.utils import validate_email_address
+
 
 def send_invoice_submission_email(doc, method):
     """
@@ -10,6 +12,8 @@ def send_invoice_submission_email(doc, method):
     """
     # Send email to customer if custom_customer_email exists
     # customer_email = doc.get('custom_customer_email')
+
+
     customer_contact= doc.get("custom_contact")
     custom_email_template= doc.get("custom_email_template")
     doc_args = doc.as_dict()

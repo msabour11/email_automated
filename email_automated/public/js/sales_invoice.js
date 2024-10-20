@@ -26,8 +26,6 @@ frappe.ui.form.on("Sales Invoice", {
       };
   },
 
-
-
   //     customer: function(frm) {
   //     if (frm.doc.customer) {
 
@@ -73,26 +71,7 @@ frappe.ui.form.on("Sales Invoice", {
   //   } else frm.set_value("custom_customer_email", "");
   // },
 
-  // before_save(frm) {
-  //   var email = frm.doc.custom_customer_email;
-  //   if (!email) {
-  //     frappe.call({
-  //       method: "frappe.client.get",
-  //       args: {
-  //         doctype: "Customer",
-  //         name: frm.doc.customer,
-  //       },
-  //       callback: function (r) {
-  //         if (r.message) {
-  //           let customer_primary_contact = r.message.email_id;
-  //           if (customer_primary_contact) {
-  //             frm.set_value("custom_customer_email", customer_primary_contact);
-  //           }
-  //         }
-  //       },
-  //     });
-  //   }
-  // },
+
 });
 
 frappe.ui.form.on("Email Contact", {
